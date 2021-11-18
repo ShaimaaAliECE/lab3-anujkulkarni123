@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+    <header style=  "height:auto; width: 100%; background-color: white; 
+                    border-bottom: lightgray solid 1px; flex-direction: row; 
+                    justify-content: space-between; display: flex;"
+                    >
+        <div class="text" style="flex-wrap: wrap; padding-left: 20px;">
+            <h2>
+                Scheduling Site
+            </h2>
+        </div>
+
+        <div class="text" style="flex-wrap: wrap; padding-right: 20px;">
+            <h2>
+                Guest
+            </h2>
+        </div>
+    </header>
+
+    <div class="body">
+        <div class="main">
+            <div class="nameInput">
+                <label>
+                    <b style="font-size: 40px; ">Enter a Name: </b>
+                </label>
+                <input type="text" name="Uname" id="Uname" placeholder="Name"/>
+            </div>
+            <div>
+                <form class="form" classaction="#" method="post" class="timeForm" id="timeForm">
+                    <fieldset>
+                        <legend> Time Slots </legend>
+                            <div class="checkBoxView">
+                                <div class="timeSlot">
+                                    <input type="checkbox" name="times[]" value="10:00 am"/>
+                                    <label>10:00 am</label>
+                                </div>
+                                <div class="timeSlot">
+                                    <input type="checkbox" name="times[]" value="11:00 am"/>
+                                    <label>11:00 am</label>
+                                </div>
+    
+                                <div class="timeSlot">
+                                    <input type="checkbox" name="times[]" value="11:00 am"/>
+                                    <label>12:00 am</label>
+                                </div>
+    
+                                <div class="timeSlot">
+                                    <input type="checkbox" name="times[]" value="1:00 pm"/>
+                                    <label>1:00 pm</label>
+                                </div>
+    
+                                <div class="timeSlot">
+                                    <input type="checkbox" name="times[]" value="2:00 pm"/>
+                                    <label>2:00 pm</label>
+                                </div>
+                                
+                                <div class="timeSlot">
+                                    <input type="checkbox" name="times[]" value="3:00 pm"/>
+                                    <label>3:00 pm</label>
+                                </div>
+    
+                                <div class="timeSlot">
+                                    <input type="checkbox" name="times[]" value="4:00 pm"/>
+                                    <label>4:00 pm</label>
+                                </div>
+    
+                                <div class="timeSlot">
+                                    <input type="checkbox" name="times[]" value="5:00 pm"/>
+                                    <label>5:00 pm</label>
+                                </div>
+                                
+                                <div class="timeSlot">
+                                    <input type="checkbox" name="times[]" value="6:00 pm"/>
+                                    <label>6:00 pm</label>
+                                </div>
+    
+                                <div class="timeSlot">
+                                    <input type="checkbox" name="times[]" value="7:00 pm"/>
+                                    <label>7:00 pm</label>
+                                </div>
+    
+                                <div class="timeSlot">
+                                    <input type="checkbox" name="times[]" value="7:00 pm"/>
+                                    <label>7:00 pm</label>
+                                </div>
+    
+                                <div class="timeSlot">
+                                    <input type="checkbox" name="times[]" value="8:00 pm"/>
+                                    <label>8:00 pm</label>
+                                </div>
+                                
+                            </div>
+                    </fieldset>
+                </form>
+                
+                <div class="available">
+                    <button class="avail-button" onClick={submitDetails}>
+                    Available
+                    </button>
+                </div>
+
+            </div>
+            
+        </div>
+                
+    </div>  
+    
+</html>
