@@ -3,12 +3,14 @@
 <head>
   <title>Doodle Admin View</title>
 </head>
+
+
 <body>
   <h1 class="title">
     doodle admin
   </h1>
   <h4 class="help-text">
-    logged in as <em class="user-name"> <%= user %></em> &nbsp &nbsp
+    logged in as <em class="user-name"> <%= user %></em> 
     <a href="/logout" class="btn-logout">LOGOUT</a>
   </h4>
 
@@ -20,24 +22,24 @@
 
   <br>
 
-  <table>
+  <table class="table">
     <thead>
-      <tr class="admin-input-row">
+      <tr class="adminInputRow">
         <form action="/update-slots" method="GET" id="admin-slot-form">
         <th style="border-bottom-left-radius: 5px; border-top-left-radius: 5px;">
-          <button type="submit" form="admin-slot-form" class="btn-save-admin" title="Submit">&#10003</button>
+          <button type="submit" form="admin-slot-form" class="btn-save-admin" title="Submit">Submit</button>
         </th>
         <th style="color: var(--marigold);">Name</th>
 
         <%%>
         <%  let timeName;%>
         <%  let timeValue;%>
-        <%  for (let i=0: i < slotCount; i++) {  {%>
-            <%//    timeName = row.SlotName;%>
-            <% //   timeValue = row.SlotValue;%>
+        <%  for (let row of availTimeSlots) {  %>
+            <%  timeName = row.SlotName;%>
+            <%  timeValue = row.SlotValue;%>
             <% %>
           <th>
-            <textarea type="text" ></textarea>
+            <input class="textArea" type="text" ></input>
           </th>
         <% } %>
         </form>
@@ -46,10 +48,9 @@
     <tbody>
       <!-- data rows -->
       <%%>
-      <%   track the status of the checkboxes %>
+      <% //track the status of the checkboxes %>
       <% let status;%>
-      <% for (let i=0: i < slotCount; i++) { %>
-      
+      <% for (row of rows) { %>
       <tr>
         <td>
           <input class="name-input" placeholder="Name" type="text" value="<%= row.Name %>" disabled/>
@@ -57,7 +58,7 @@
         <%%>
          <% for (let i = 1; i <= slotCount; i++) { %>
             <%   status = row[`Slot${i}`] ? "checked" : undefined; %>
-        <%%>
+        
         <td>
           <input type="checkbox" class="slot-check-box" disabled <%= status %> />
         </td>

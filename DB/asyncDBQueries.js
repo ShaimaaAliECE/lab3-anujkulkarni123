@@ -10,7 +10,7 @@ async function getPageData()    {
 
     conn.connect();
 
-    conn.query = util.promisify(conn.query).bind(conn);
+    let query = util.promisify(conn.query).bind(conn);
 
     let doodleTimeSlotEntries, availTimeSlotsEntries;
 
@@ -25,7 +25,10 @@ async function getPageData()    {
                                              FROM 
                                              ${availTimeSlots};
       `);
-    }   finally {
+      
+    }   catch (err) {
+        console.log(err);
+    }  finally {
         conn.end();
 
         return { doodleTimeSlotEntries: doodleTimeSlotEntries, availTimeSlotsEntries: availTimeSlotsEntries };

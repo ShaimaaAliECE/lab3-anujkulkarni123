@@ -97,6 +97,7 @@ router.get('/UserLogin', (req, res) => {
 //Route to Guest Login
 router.get('/guestView', (req, res) => {
   getPageData().then(({doodleTimeSlotEntries, availTimeSlotsEntries}) =>  {
+    console.log(availTimeSlotsEntries);
     //determines whether rows are added
     if (addedRows)  {
       addedRows=false;
@@ -163,7 +164,7 @@ router.get('/DoodleAdmin', (req, res) => {
   // if the user is not logged in then redirect them to the home page
   if ( user === undefined)
   {
-    res.redirect('/');
+    res.redirect('/DoodleAdmin');
     return;
   }
 
