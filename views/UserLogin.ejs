@@ -2,7 +2,7 @@
 <html lang="en">
 
     <head>
-        <title>index</title>
+        <title>Doodle Web App</title>
         <link rel="stylesheet" href="index.css">
     </head>
 
@@ -23,59 +23,52 @@
 
     <body style="height: 100%; width: 100%; background-color: white">
 
+        <% if (locals.errMsg)   { %>
+            <h3 class="errMsg"> <%= errMsg %> </h3>
+        <% } %>
+
         <div class="container" style=   "display: flex; flex-direction: row; justify-content: center;">
-            <div class="login" style="flex-direction: column; display: flex; justify-content: center; flex-wrap: wrap;"> 
+           
+            <div class="login" style="flex-direction: column; display: flex; justify-content: center; flex-wrap: wrap;"
+                 action="/"> 
             
                 <div className="login info" style="padding-top: 25px;
                             padding-bottom: 15px;
                             padding-left: 10px;
                             padding-right: 15px;
-                            flex-wrap: wrap;"
+                            flex-wrap: wrap; flex-direction: column;"
                             >
                     <label>
                         <h1>Returning User</h1>
                     </label>
                 </div>
-    
-                <div className="login info" style="padding-top: 25px;
+                    <form className="login-info" style="padding-top: 25px;
                             padding-bottom: 15px;
                             padding-left: 10px;
                             padding-right: 10px;
-                            flex-wrap: wrap;"
+                            flex-wrap: wrap;" action="/UserLogin"
+                            method="POST"
                             >
-                    <label>
-                        <b>User Name</b>
-                    </label>
-                    <input type="text" name="Uname" id="Uname" placeholder="UserName">
-                </div>
-                
-                <div className="login info" style="padding-top: 25px;
-                            padding-bottom: 15px;
-                            padding-left: 10px;
-                            padding-right: 10px;
-                            flex-wrap: wrap;"
-                >
-                    <label>
-                        <b>Password</b>
-                    </label>
-                    <input type="text" name="PWord" id="PWord" placeholder="Password">
-                </div>
-                <div className="login info" style="padding-top: 25px;
-                            padding-bottom: 15px;
-                            padding-left: 10px;
-                            padding-right: 20px;
-                            flex-wrap: wrap;"
-                            >
+                        <label>
+                            <b>User Name</b>
+                        </label>
+                        <input type="text" name="userName" id="userName" placeholder="UserName">
                     
-                    <Button href="/adminView" >User Login</Button>
-                </div>
+                        <label>
+                            <b>Password</b>
+                        </label>
+                        <input type="password" name="password" id="password" placeholder="Password">
+                        
+                        <button type="submit" >Login</button>
+                    </form>
+                
             </div>
             <div style="padding-top: 25px;
                         padding-bottom: 15px;
                         padding-left: 10px;
                         padding-right: 15px;">
                 <h1>Welcome Guest</h1>
-                <button href="/guestView" >Guest Login</button>
+                <a href="/guestView" >Guest Login</a> 
             </div>
         </div>
 

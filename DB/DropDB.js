@@ -1,11 +1,9 @@
-const { adminUsers, doodleTimeSlots } = require('./DBTables');
+// initializing constants
+const { adminUsers, doodleTimeSlots, availTimeSlots  } = require('./DBTables')
 
-let conn = mySql.createConnection({
-    host: '35.238.3.171', 
-    user: 'root',
-    password: '3316',
-    database: 'Lab3',
-});
+const createConnection = require('./DBConnection');
+
+const conn = createConnection();
 
 
 //connecting to DB
@@ -26,5 +24,13 @@ conn.query(`DROP TABLE ${adminUsers}`, (err) => {
     else
         console.log(`Dropped ${adminUsers} table`);
 });
+
+// drop table if it already exists
+conn.query(`DROP TABLE IF EXISTS ${availTimeSlots};`, (err) => {
+    if (err) throw err;
+  
+    // success message
+    console.log(`Dropped ${availTimeSlots} Table`);
+  });
 
     

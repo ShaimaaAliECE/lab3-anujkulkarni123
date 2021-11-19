@@ -1,16 +1,11 @@
-const mySql = require('mysql');
+// initializing constants
+const { adminUsers, doodleTimeSlots, availTimeSlots  } = require('./DBTables')
 
-const { adminUsers, doodleTimeSlots } = require('./DBTables')
+const createConnection = require('./DBConnection');
 
-let conn = mySql.createConnection({
-    host: '35.238.3.171', 
-    user: 'root',
-    password: '3316',
-    database: 'Lab3',
-});
+const conn = createConnection();
 
-
-
+//connecting with DB
 conn.connect();
 
 
@@ -23,7 +18,7 @@ conn.query(`DROP TABLE IF EXISTS ${adminUsers};`
     }
 );
 
-conn.query(`CREATE TABLE ${adminUsers} ( userName varchar(100), password varchar(100) )`
+conn.query(`CREATE TABLE ${adminUsers} ( userName varchar(100), password varchar(100) );`
             ,(err,rows,fields) => {   
             if(err) 
                 console.log(err);
@@ -36,19 +31,19 @@ conn.query(`CREATE TABLE ${adminUsers} ( userName varchar(100), password varchar
 const admins = [
     {
         "userName": "anujK",
-        "password": "anujKpassword"
+        "password": "anujK"
     },
     {
         "userName": "anujK123",
-        "password": "anujK123password"
+        "password": "anujK123"
     }
 ];
 
 for (admin of admins) {
     conn.query(`
       INSERT INTO ${adminUsers} VALUES (
-        '${admin.username}'
-        ,'${admin.pwd}'
+        '${admin.userName}'
+        ,'${admin.password}'
       );
     `,(err,rows,fields) => {   
     if(err) 
@@ -59,16 +54,17 @@ for (admin of admins) {
 );
 }
 
-
-
-conn.query(`SELECT * FROM ${adminUsers}`,
+conn.query(`SELECT 
+            * 
+            FROM 
+                ${adminUsers}`,
     (err,rows,fields) => {   
     if(err) 
         console.log(err);
     else 
         console.log(fields);
     
-    console.log(`Data from ${users} table: `);
+    console.log(`Data from ${adminUsers} table: `);
     for (let r of rows) 
         console.log(r);
     }
@@ -80,11 +76,9 @@ conn.query(`DROP TABLE IF EXISTS ${doodleTimeSlots};`, (err) => {
         console.log(err)
     else
         console.log(`Dropped ${doodleTimeSlots} table`);
-  });
+      });
 
-
-
-conn.query(`CREATE TABLE ${doodleSlots} (
+conn.query(`CREATE TABLE ${doodleTimeSlots} (
     Name VARCHAR(100)
     ,Slot1 BOOLEAN
     ,Slot2 BOOLEAN
@@ -97,11 +91,62 @@ conn.query(`CREATE TABLE ${doodleSlots} (
     ,Slot9 BOOLEAN
     ,Slot10 BOOLEAN
 );`, (err) => {
-    if (err) throw err;
+    if(err) 
+        console.log(err);
 
     // success message
     console.log(`Created ${doodleTimeSlots} table`);
 });
 
+conn.query(`DROP TABLE IF EXISTS ${availTimeSlots};`, (err) => {
+    if(err) 
+        console.log(err);
+  
+    // success message
+    console.log(`Table ${availTimeSlots} dropped`);
+  });
+  
+  // query to create table
+  conn.query(`
+    CREATE TABLE ${availTimeSlots} (
+      SlotName VARCHAR(100)
+      ,SlotValue VARCHAR(100)
+    );
+  `, (err) => {
+    if (err) 
+        console.log(err);
+  
+      // success message
+      console.log(`Successfully Created ${availTimeSlots} table`);
+  });
+  
+  // Default Data for TimeSlot Table
+  const timeSlotData = {
+    'Slot1': '8:00am to 9:00am',
+    'Slot2': '9:00am to 10:00am',
+    'Slot3': '10:00am to 11:00am',
+    'Slot4': '11:00am to 12:00pm',
+    'Slot5': '12:00pm to 1:00pm',
+    'Slot6': '1:00pm to 2:00pm',
+    'Slot7': '2:00pm to 3:00pm',
+    'Slot8': '3:00pm to 4:00pm',
+    'Slot9': '4:00pm to 5:00pm',
+    'Slot10': '5:00pm to 6:00pm'
+  }
+  
+  // add data to the timeSlot table by looping over the above data
+  for (let key in timeSlotData) {
+    conn.query(`
+        INSERT INTO ${availTimeSlots} VALUES
+          ('${key}', '${timeSlotData[key]}');
+    `, (err) => {
+    if (err) 
+        console.log(err);
+  
+      // success message
+      console.log(`Successfully added Slot to ${availTimeSlots} table`);
+    });
+  }
 
+//ending connection to DB
 conn.end();
