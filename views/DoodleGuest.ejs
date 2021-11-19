@@ -1,109 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <title>Doodle Guest View</title>
+</head>
+<body>
+  <h1 class="title">DOODLE!</h1>
 
-    <header style=  "height:auto; width: 100%; background-color: white; 
-                    border-bottom: lightgray solid 1px; flex-direction: row; 
-                    justify-content: space-between; display: flex;"
-                    >
-        <div class="text" style="flex-wrap: wrap; padding-left: 20px;">
-            <h2>
-                Scheduling Site
-            </h2>
-        </div>
+  <% if (locals.msg) { %>
+      <h3 class="auth-fail-text" style="background-color: var(--success);">
+          <%= msg %>
+      </h3>
+  <% } %>
 
-        <div class="text" style="flex-wrap: wrap; padding-right: 20px;">
-            <h2>
-                Guest
-            </h2>
-        </div>
-    </header>
+  <div>
+    <div>
+      <!-- guest form to add an entry -->
+      <div class="row-div">
+        <form action="/addGuest" method="GET">
+            <td>
+                <input class="name-input" placeholder="Name" type="text" name="name" />
+            </td>
 
-    <div class="body">
-        <div class="main">
-            <div class="nameInput">
-                <label>
-                    <b style="font-size: 40px; ">Enter a Name: </b>
-                </label>
-                <input type="text" name="Uname" id="Uname" placeholder="Name"/>
-            </div>
-            <div>
-                <form class="form" classaction="#" method="post" class="timeForm" id="timeForm">
-                    <fieldset>
-                        <legend> Time Slots </legend>
-                            <div class="checkBoxView">
-                                <div class="timeSlot">
-                                    <input type="checkbox" name="times[]" value="10:00 am"/>
-                                    <label>10:00 am</label>
-                                </div>
-                                <div class="timeSlot">
-                                    <input type="checkbox" name="times[]" value="11:00 am"/>
-                                    <label>11:00 am</label>
-                                </div>
-    
-                                <div class="timeSlot">
-                                    <input type="checkbox" name="times[]" value="11:00 am"/>
-                                    <label>12:00 am</label>
-                                </div>
-    
-                                <div class="timeSlot">
-                                    <input type="checkbox" name="times[]" value="1:00 pm"/>
-                                    <label>1:00 pm</label>
-                                </div>
-    
-                                <div class="timeSlot">
-                                    <input type="checkbox" name="times[]" value="2:00 pm"/>
-                                    <label>2:00 pm</label>
-                                </div>
-                                
-                                <div class="timeSlot">
-                                    <input type="checkbox" name="times[]" value="3:00 pm"/>
-                                    <label>3:00 pm</label>
-                                </div>
-    
-                                <div class="timeSlot">
-                                    <input type="checkbox" name="times[]" value="4:00 pm"/>
-                                    <label>4:00 pm</label>
-                                </div>
-    
-                                <div class="timeSlot">
-                                    <input type="checkbox" name="times[]" value="5:00 pm"/>
-                                    <label>5:00 pm</label>
-                                </div>
-                                
-                                <div class="timeSlot">
-                                    <input type="checkbox" name="times[]" value="6:00 pm"/>
-                                    <label>6:00 pm</label>
-                                </div>
-    
-                                <div class="timeSlot">
-                                    <input type="checkbox" name="times[]" value="7:00 pm"/>
-                                    <label>7:00 pm</label>
-                                </div>
-    
-                                <div class="timeSlot">
-                                    <input type="checkbox" name="times[]" value="7:00 pm"/>
-                                    <label>7:00 pm</label>
-                                </div>
-    
-                                <div class="timeSlot">
-                                    <input type="checkbox" name="times[]" value="8:00 pm"/>
-                                    <label>8:00 pm</label>
-                                </div>
-                                
-                            </div>
-                    </fieldset>
-                </form>
-                
-                <div class="available">
-                    <button class="avail-button" onClick={submitDetails}>
-                    Available
-                    </button>
-                </div>
+            <% for (let i = 1; i <= slotCount; i++) { %>
+                <%  let timeValue = "";%>
+                <%for (let i=0: i < slotCount; i++) {%>
+                    <%timeValue = row.SlotValue;%>
+                    <td>
+                    <label title="<%=timeValue%>"></label>
+                    <input type="checkbox" class="slot-check-box" name="Slot_<%=i%>" value="True" />
+                  </td>
+            <% } %>
 
-            </div>
-            
-        </div>
-                
-    </div>  
-    
+            <% } %>
+            <td>
+              <button class="btn-save-guest" type="submit">SUBMIT</button>
+            </td>
+        </form>
+      </tr>
+
+      <!-- data rows -->
+      <% let status; %>
+      <% for (let row of rows)  {   %>
+
+      <tr>
+        <td style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+        </td>
+        <td>
+          <input class="name-input" placeholder="Name" type="text" value="x"  disabled/>
+        </td>
+            <% for (let i=0; i < 10; i++)  { %>
+            <% status = row[`Slot${i}`] ? "checked" : undefined; %>
+                <td>
+                    <input type="checkbox" class="slot-check-box" disabled>/>
+                </td>
+
+                <td>
+                <input type="checkbox" class="slot-check-box" disabled />
+                </td>
+        <% } %>
+        
+      </tr>
+        <% } %>
+    </div>
+</div>
+</body>
 </html>

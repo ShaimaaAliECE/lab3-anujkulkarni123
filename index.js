@@ -1,10 +1,10 @@
 //requires external modules
 const express = require('express');
-const mySql = require('mysql');
 const createConnection = require('./DB/DBConnection');
 const { adminUsers, doodleTimeSlots, availTimeSlots  } = require('./DB/DBTables');
-const { getPageInfo, UpdateTimeSlots } = require('./DB/asyncDBQueries');
+const { getPageData, updateTimeSlots } = require('./DB/asyncDBQueries');
 const path = require('path');
+const bodyParser = require('body-parser');
 
 //app variables
 const app = express();
@@ -56,6 +56,8 @@ router.use(express.urlencoded({
   extended: true
 }));
 
+app.use(bodyParser.urlencoded({ extended: true }));
+
 router.post('/UserLogin', (req, res) => {
   if (user) {
     res.redirect('/DoodleAdmin')
@@ -94,7 +96,7 @@ router.get('/UserLogin', (req, res) => {
 
 //Route to Guest Login
 router.get('/guestView', (req, res) => {
-  getPageInfo().then(({doodleTimeSlotEntries, availTimeSlotsEntries}) =>  {
+  getPageData().then(({doodleTimeSlotEntries, availTimeSlotsEntries}) =>  {
     //determines whether rows are added
     if (addedRows)  {
       addedRows=false;
@@ -104,32 +106,31 @@ router.get('/guestView', (req, res) => {
     }
   }).catch((err) => {
     console.log(err);
-    throw err;
   });
 });
 
 //for adding guest data to the database
-router.get('/add-guest', (req, res) => {
+router.get('/addGuest', (req, res) => {
   // get the name value from the form
-  let name = req.query.name.replace('-', ' ');
+  let guestName = req.query.name.replace('-', ' ');
 
-  if (!name) {
+  if (!guestName) {
     res.redirect('/guestView');
     return;
   }
 
   // get the slots value from the form
   let slots = [
-    req.query.Slot_1 === "True" ? true : false,
-    req.query.Slot_2 === "True" ? true : false,
-    req.query.Slot_3 === "True" ? true : false,
-    req.query.Slot_4 === "True" ? true : false,
-    req.query.Slot_5 === "True" ? true : false,
-    req.query.Slot_6 === "True" ? true : false,
-    req.query.Slot_7 === "True" ? true : false,
-    req.query.Slot_8 === "True" ? true : false,
-    req.query.Slot_9 === "True" ? true : false,
-    req.query.Slot_10 === "True" ? true : false
+    req.query.slot_0 === "True" ? true : false,
+    req.query.slot_1 === "True" ? true : false,
+    req.query.slot_2 === "True" ? true : false,
+    req.query.slot_3 === "True" ? true : false,
+    req.query.slot_4 === "True" ? true : false,
+    req.query.slot_5 === "True" ? true : false,
+    req.query.slot_6 === "True" ? true : false,
+    req.query.slot_7 === "True" ? true : false,
+    req.query.slot_8=== "True" ? true : false,
+    req.query.slot_9 === "True" ? true : false
   ];
 
 
@@ -140,7 +141,7 @@ router.get('/add-guest', (req, res) => {
   conn.query(`
       INSERT INTO ${doodleTimeSlots}
       VALUES
-        (\"${name}\", ${slots[0]}, ${slots[1]}, ${slots[2]}, ${slots[3]}, ${slots[4]}, ${slots[5]}, ${slots[6]}, ${slots[7]}, ${slots[8]}, ${slots[9]});
+        (\"${guestName}\", ${slots[0]}, ${slots[1]}, ${slots[2]}, ${slots[3]}, ${slots[4]}, ${slots[5]}, ${slots[6]}, ${slots[7]}, ${slots[8]}, ${slots[9]});
     `, (err) => {
       if (err) throw err;
 
@@ -166,13 +167,13 @@ router.get('/DoodleAdmin', (req, res) => {
     return;
   }
 
-  getPageInfo().then(({doodleSlotEntries, availTimeSlotsEntries}) => {
+  getPageData().then(({doodleTimeSlotEntries, availTimeSlotsEntries}) => {
     // if statement to determine whether the timeSlots were updated or not
     if (updatedSlots) {
       updatedSlots = false;
-      res.render('DoodleAdmin', {user: user, availTimeSlots: availTimeSlotsEntries, rows: doodleSlotEntries, slotCount: slotCount, msg: 'Successfully Updated the Slots!'})
+      res.render('DoodleAdmin', {user: user, availTimeSlots: availTimeSlotsEntries, rows: doodleTimeSlotEntries, slotCount: slotCount, msg: 'Successfully Updated the Slots!'})
     } else {
-      res.render('DoodleAdmin', {user: user, availTimeSlots: availTimeSlotsEntries, rows: doodleSlotEntries, slotCount: slotCount})
+      res.render('DoodleAdmin', {user: user, availTimeSlots: availTimeSlotsEntries, rows: doodleTimeSlotEntries, slotCount: slotCount})
     }
   }).catch((err) => {
     throw err;
@@ -190,16 +191,16 @@ router.get('/updateSlots', async (req, res) => {
 
   // values for the slots from the form
   let slotValues = {
-    "Slot1": req.query.Slot1,
-    "Slot2": req.query.Slot2,
-    "Slot3": req.query.Slot3,
-    "Slot4": req.query.Slot4,
-    "Slot5": req.query.Slot5,
-    "Slot6": req.query.Slot6,
-    "Slot7": req.query.Slot7,
-    "Slot8": req.query.Slot8,
-    "Slot9": req.query.Slot9,
-    "Slot10": req.query.Slot10
+    "Slot0": req.query.Slot1,
+    "Slot1": req.query.Slot2,
+    "Slot2": req.query.Slot3,
+    "Slot3": req.query.Slot4,
+    "Slot4": req.query.Slot5,
+    "Slot5": req.query.Slot6,
+    "Slot6": req.query.Slot7,
+    "Slot7": req.query.Slot8,
+    "Slot8": req.query.Slot9,
+    "Slot9": req.query.Slot10
   }
 
   // call the async function to update the values of the timeSlots table

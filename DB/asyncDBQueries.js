@@ -1,31 +1,29 @@
 //accessing the database with async functions
 
-const { createConnection, adminUsers, doodleTimeSlots, availTimeSlots  } = require('./DBTables')
-
-
-
+const { createConnection, doodleTimeSlots, availTimeSlots  } = require('./DBTables')
 const util = require('util');
-const { query } = require('express');
+
 
 //function to get row and column info of entries
-async function getPageInfo()    {
+async function getPageData()    {
     const conn = createConnection();
 
     conn.connect();
 
     conn.query = util.promisify(conn.query).bind(conn);
 
-    let doodleTimeSlotEntries;
-    let availTimeSlotsEntries;
+    let doodleTimeSlotEntries, availTimeSlotsEntries;
 
     try {
         doodleTimeSlotEntries = await query(`SELECT 
                                              *
-                                             FROM ${doodleTimeSlots};`)
+                                             FROM 
+                                             ${doodleTimeSlots};`);
         
-        availTimeSlotsEntries = await query(`   SELECT
-                                                *
-                                                FROM ${availTimeSlots};
+        availTimeSlotsEntries = await query(`SELECT
+                                             *
+                                             FROM 
+                                             ${availTimeSlots};
       `);
     }   finally {
         conn.end();
@@ -61,6 +59,6 @@ async function updateTimeSlots(addedTimeSlots)  {
 }
 
 module.exports = {
-    getPageInfo : getPageInfo,
+    getPageData : getPageData,
     updateTimeSlots : updateTimeSlots
 };

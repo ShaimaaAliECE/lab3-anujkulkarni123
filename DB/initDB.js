@@ -71,8 +71,8 @@ conn.query(`SELECT
 );
 
 
-conn.query(`DROP TABLE IF EXISTS ${doodleTimeSlots};`, (err) => {
-    if (err) 
+conn.query(`DROP TABLE IF EXISTS ${doodleTimeSlots};`, (err,rows,fields) => {
+    if (err,rows,fields)  
         console.log(err)
     else
         console.log(`Dropped ${doodleTimeSlots} table`);
@@ -80,6 +80,7 @@ conn.query(`DROP TABLE IF EXISTS ${doodleTimeSlots};`, (err) => {
 
 conn.query(`CREATE TABLE ${doodleTimeSlots} (
     Name VARCHAR(100)
+    ,Slot0 BOOLEAN
     ,Slot1 BOOLEAN
     ,Slot2 BOOLEAN
     ,Slot3 BOOLEAN
@@ -89,8 +90,7 @@ conn.query(`CREATE TABLE ${doodleTimeSlots} (
     ,Slot7 BOOLEAN
     ,Slot8 BOOLEAN
     ,Slot9 BOOLEAN
-    ,Slot10 BOOLEAN
-);`, (err) => {
+);`, (err,rows,fields) => {
     if(err) 
         console.log(err);
 
@@ -112,7 +112,7 @@ conn.query(`DROP TABLE IF EXISTS ${availTimeSlots};`, (err) => {
       SlotName VARCHAR(100)
       ,SlotValue VARCHAR(100)
     );
-  `, (err) => {
+  `, (err,rows,fields) => {
     if (err) 
         console.log(err);
   
@@ -122,16 +122,16 @@ conn.query(`DROP TABLE IF EXISTS ${availTimeSlots};`, (err) => {
   
   // Default Data for TimeSlot Table
   const timeSlotData = {
-    'Slot1': '8:00am to 9:00am',
-    'Slot2': '9:00am to 10:00am',
-    'Slot3': '10:00am to 11:00am',
-    'Slot4': '11:00am to 12:00pm',
-    'Slot5': '12:00pm to 1:00pm',
-    'Slot6': '1:00pm to 2:00pm',
-    'Slot7': '2:00pm to 3:00pm',
-    'Slot8': '3:00pm to 4:00pm',
-    'Slot9': '4:00pm to 5:00pm',
-    'Slot10': '5:00pm to 6:00pm'
+    'Slot0': '8:00am',
+    'Slot1': '9:00am',
+    'Slot2': '10:00am',
+    'Slot3': '11:00am',
+    'Slot4': '12:00pm',
+    'Slot5': '1:00pm',
+    'Slot6': '2:00pm',
+    'Slot7': '3:00pm',
+    'Slot8': '4:00pm',
+    'Slot9': '5:00pm'
   }
   
   // add data to the timeSlot table by looping over the above data
@@ -139,7 +139,7 @@ conn.query(`DROP TABLE IF EXISTS ${availTimeSlots};`, (err) => {
     conn.query(`
         INSERT INTO ${availTimeSlots} VALUES
           ('${key}', '${timeSlotData[key]}');
-    `, (err) => {
+    `, (err,rows,fields) => {
     if (err) 
         console.log(err);
   
@@ -147,6 +147,22 @@ conn.query(`DROP TABLE IF EXISTS ${availTimeSlots};`, (err) => {
       console.log(`Successfully added Slot to ${availTimeSlots} table`);
     });
   }
+
+  conn.query(`SELECT 
+            * 
+            FROM 
+                ${availTimeSlots}`,
+    (err,rows,fields) => {   
+    if(err) 
+        console.log(err);
+    else 
+        console.log(fields);
+    
+    console.log(`Data from ${availTimeSlots} table: `);
+    for (let r of rows) 
+        console.log(r);
+    }
+);
 
 //ending connection to DB
 conn.end();
