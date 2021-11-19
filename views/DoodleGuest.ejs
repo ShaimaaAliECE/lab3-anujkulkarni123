@@ -21,24 +21,67 @@
                 <input class="name-input" placeholder="Name" type="text" name="name" />
             </td>
 
-            <% for (let i = 1; i <= slotCount; i++) { %>
-                <%  let timeValue = "";%>
-                <%for (let i=0: i < slotCount; i++) {%>
-                    <%timeValue = row.SlotValue;%>
+            <%//for (let i = 1; i <= slotCount; i++) { %>
+                <%//let timeValue = "";%>
+                <%//for (let i=0; i < slotCount; i++) {%>
+                  <//%timeValue = i.SlotValue;%>
                     <td>
-                    <label title="<%=timeValue%>"></label>
-                    <input type="checkbox" class="slot-check-box" name="Slot_<%=i%>" value="True" />
+                    <label>10:00am</label>
+                    <input type="checkbox" class="slot-check-box" value="True" />
                   </td>
-            <% } %>
-
-            <% } %>
+                  <td>
+                    <label>11:00am</label>
+                    <input type="checkbox" class="slot-check-box" value="True" />
+                  </td>
+                  <td>
+                    <label>12:00pm</label>
+                    <input type="checkbox" class="slot-check-box" value="True" />
+                  </td>
+                  <td>
+                    <label>1:00pm</label>
+                    <input type="checkbox" class="slot-check-box" value="True" />
+                  </td>
+                  <td>
+                    <label>2:00pm</label>
+                    <input type="checkbox" class="slot-check-box" value="True" />
+                  </td>
+                  <td>
+                    <label>3:00pm</label>
+                    <input type="checkbox" class="slot-check-box" value="True" />
+                  </td>
+                  <td>
+                    <label>4:00pm</label>
+                    <input type="checkbox" class="slot-check-box" value="True" />
+                  </td>
+                  <td>
+                    <label>5:00pm</label>
+                    <input type="checkbox" class="slot-check-box" value="True" />
+                  </td>
+                  <td>
+                    <label>6:00pm</label>
+                    <input type="checkbox" class="slot-check-box" value="True" />
+                  </td>
+                  <td>
+                    <label>7:00pm</label>
+                    <input type="checkbox" class="slot-check-box" value="True" />
+                  </td>
+            <%// } %>
+            <%// } %>
             <td>
               <button class="btn-save-guest" type="submit">SUBMIT</button>
             </td>
         </form>
       </tr>
 
-      <!-- data rows -->
+      <!-- data rows 
+        !! error returned !!
+        41|      
+        42|       <% let status; %>
+        43|       <% for (let row of addedRows)  {   %>
+        44| 
+        45|       <tr>
+        46|         <td style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+    
       <% let status; %>
       <% for (let row of rows)  {   %>
 
@@ -61,6 +104,7 @@
         
       </tr>
         <% } %>
+      -->
     </div>
 </div>
 </body>
