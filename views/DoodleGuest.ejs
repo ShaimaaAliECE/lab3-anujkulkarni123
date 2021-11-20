@@ -2,9 +2,25 @@
 <html lang="en">
 <head>
   <title>Doodle Guest View</title>
+  <link rel="stylesheet" href="Guest.css">
 </head>
-<body>
-  <h1 class="title">DOODLE!</h1>
+
+
+<body style="margin: 0 !important; background-color: lightblue;">
+    <header className="header" style="height:auto; width: 100%; background-color: darkcyan; 
+    border-bottom: lightgray solid 1px; flex-direction: row; 
+    justify-content: space-between; display: flex;">
+        <div className="text" style="flex-wrap: wrap; padding-left: 20px;">
+            <h2>
+                Scheduling Site
+            </h2>
+        </div>
+        <div className="text" style="flex-wrap: wrap; padding-right: 20px;">
+            <h2>
+              Guest
+            </h2>
+        </div>
+    </header>
 
   <% if (locals.msg) { %>
       <h3 class="auth-fail-text" style="background-color: var(--success);">
@@ -12,10 +28,12 @@
       </h3>
   <% } %>
 
-  <div>
-    <div>
-      <!-- guest form to add an entry -->
-      <div class="row-div">
+  <div style="display: flex; justify-content: center;" >
+    <div style="display: flex; justify-content: center; padding: 40px; border: 1px solid black;
+                border-radius: 25px; width: fit-content; flex-direction: column;">
+ 
+      <div class="row-div" style="display: flex; justify-content: center; border: 1px solid black;
+                                  border-radius: 25px; width: fit-content; padding: 20px;">
         <form action="/addGuest" method="GET">
             <td>
                 <input class="name-input" placeholder="Name" type="text" name="name" />
@@ -36,27 +54,27 @@
               <button class="btn-save-guest" type="submit">SUBMIT</button>
             </td>
         </form>
-      </tr>
+      </div>
       
 
       <% let status;%>
       <% for (row of rows) { %>
 
-        <tr>
-        <td style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
-        </td>
+      <div style="border: 1px solid black; border-radius: 20px; padding: 20px; margin-top: 30px;">
         <td>
           <input class="name-input" placeholder="Name" type="text" value="x"  disabled/>
         </td>
             <% for (let i=0; i < 10; i++)  { %>
             <% status = rows[`Slot${i}`] ? "checked" : undefined; %>
-                <td>
+                
+                <td style="margin-left: 20px; margin-right: 20px;">
                     <input type="checkbox" class="slot-check-box" disabled <%= status%>/>
                 </td>
+              
 
         <% } %>
-        
-      </tr>
+      </div>
+      
       <% } %>
     </div>
 </div>

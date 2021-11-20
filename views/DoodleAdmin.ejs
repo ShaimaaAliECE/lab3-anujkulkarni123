@@ -5,10 +5,23 @@
 </head>
 
 
-<body>
-  <h1 class="title">
-    doodle admin
-  </h1>
+<body style="margin: 0 !important; background-color: lightblue;">
+  <header className="header" style="height:auto; width: 100%; background-color: darkcyan; 
+  border-bottom: lightgray solid 1px; flex-direction: row; 
+  justify-content: space-between; display: flex;">
+      <div className="text" style="flex-wrap: wrap; padding-left: 20px;">
+          <h2>
+              Scheduling Site
+          </h2>
+      </div>
+      <div className="text" style="flex-wrap: wrap; padding-right: 20px;">
+          <h2>
+            logged in as <em class="user-name"> <%= user %></em> 
+            <a href="/logout" class="btn-logout">LOGOUT</a>
+          </h2>
+      </div>
+  </header>
+
   <h4 class="help-text">
     logged in as <em class="user-name"> <%= user %></em> 
     <a href="/logout" class="btn-logout">LOGOUT</a>
@@ -25,13 +38,13 @@
   <table class="table">
     <thead>
       <tr class="adminInputRow">
-        <form action="/update-slots" method="GET" id="admin-slot-form">
+        <form action="/updateSlots" method="GET" id="admin-slot-form">
         <th style="border-bottom-left-radius: 5px; border-top-left-radius: 5px;">
           <button type="submit" form="admin-slot-form" class="btn-save-admin" title="Submit">Submit</button>
         </th>
-        <th style="color: var(--marigold);">Name</th>
+        <th style="color: #000;;">Name</th>
 
-        <%%>
+        
         <%  let timeName;%>
         <%  let timeValue;%>
         <%  for (let row of availTimeSlots) {  %>
@@ -47,7 +60,6 @@
     </thead>
     <tbody>
       <!-- data rows -->
-      <%%>
       <% //track the status of the checkboxes %>
       <% let status;%>
       <% for (row of rows) { %>
@@ -55,7 +67,7 @@
         <td>
           <input class="name-input" placeholder="Name" type="text" value="<%= row.Name %>" disabled/>
         </td>
-        <%%>
+      
          <% for (let i = 1; i <= slotCount; i++) { %>
             <%   status = row[`Slot${i}`] ? "checked" : undefined; %>
         
